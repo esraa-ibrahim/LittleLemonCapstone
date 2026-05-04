@@ -1,10 +1,11 @@
 package com.me.littlelemoncapstone
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,12 +32,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.me.littlelemoncapstone.ui.theme.LittleLemonCapstoneTheme
-
+import androidx.core.content.edit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Onboarding() {
+fun Onboarding(navController: NavHostController) {
+    val context = LocalContext.current
+
+    var userFirstName by remember { mutableStateOf("") }
+    var userLastName by remember { mutableStateOf("") }
+    var userEmail by remember { mutableStateOf("") }
+
     Scaffold()
      { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
@@ -51,9 +60,6 @@ fun Onboarding() {
                 modifier = Modifier.weight(1f).padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                var userFirstName by remember { mutableStateOf("") }
-                var userLastName by remember { mutableStateOf("") }
-                var userEmail by remember { mutableStateOf("") }
 
                 Text(
                     text = "Let's Get To Know You!",
@@ -90,7 +96,18 @@ fun Onboarding() {
                 )
             }
 
-            Button(onClick = {},
+            Button(onClick = {
+                if (userFirstName.isBlank() || userLastName.isBlank() || userEmail.isBlank()) {
+                    Toast.makeText(context, "Registration unsuccessful. Please enter all data.",
+                        Toast.LENGTH_SHORT).show()
+                } else {
+                    PreferencesManager.setUserData(context, userFirstName, userLastName, userEmail)
+                    navController.navigate(Home.route)
+
+                    Toast.makeText(context, "Registration successful!",
+                        Toast.LENGTH_SHORT).show()
+                }
+            },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -113,6 +130,6 @@ fun Onboarding() {
 @Composable
 fun OnboardingPreview() {
     LittleLemonCapstoneTheme {
-        Onboarding()
+        //Onboarding(navController)
     }
 }

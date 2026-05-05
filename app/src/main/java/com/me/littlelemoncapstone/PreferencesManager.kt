@@ -38,9 +38,9 @@ object PreferencesManager {
     }
 
     fun getUserData(context: Context): UserData {
-        val userData = UserData(getPrefs(context).getString(KEY_FIRST_NAME, null),
-            getPrefs(context).getString(KEY_LAST_NAME, null),
-            getPrefs(context).getString(KEY_EMAIL, null))
+        val userData = UserData(getPrefs(context).getString(KEY_FIRST_NAME, null) ?: "",
+            getPrefs(context).getString(KEY_LAST_NAME, null) ?: "",
+            getPrefs(context).getString(KEY_EMAIL, null) ?: "")
         return userData
     }
 

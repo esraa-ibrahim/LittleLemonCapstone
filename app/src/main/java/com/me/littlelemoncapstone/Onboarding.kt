@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -45,85 +46,91 @@ fun Onboarding(navController: NavHostController) {
     var userLastName by remember { mutableStateOf("") }
     var userEmail by remember { mutableStateOf("") }
 
-    Scaffold()
-     { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-            Row() {
-                Image(
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 16.dp, start =  64.dp, end = 64.dp), // Maintain 16:9 ratio based on width,
-                    painter = painterResource(id = R.drawable.logo),
-                    contentScale = ContentScale.Fit,
-                    contentDescription = "App Logo"
-                )
-            }
-            Column(
-                modifier = Modifier.weight(1f).padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+    Column {
+        Row {
+            Image(
+                modifier = Modifier.fillMaxWidth().padding(
+                    top = 16.dp,
+                    bottom = 16.dp,
+                    start = 64.dp,
+                    end = 64.dp
+                ),
+                painter = painterResource(id = R.drawable.logo),
+                contentScale = ContentScale.Fit,
+                contentDescription = "App Logo"
+            )
+        }
+        Column(
+            modifier = Modifier.weight(1f).padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-                Text(
-                    text = "Let's Get To Know You!",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                    fontSize = 40.sp,
-                    lineHeight = 56.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colorResource(R.color.green)
-                )
+            Text(
+                text = "Let's Get To Know You!",
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+                fontSize = 40.sp,
+                lineHeight = 56.sp,
+                fontWeight = FontWeight.Bold,
+                color = colorResource(R.color.green)
+            )
 
-                TextField(
-                    modifier = Modifier.padding(top = 32.dp),
-                    value = userFirstName,
-                    maxLines = 1,
-                    onValueChange = { value -> userFirstName = value },
-                    label = { Text("First name") }
-                )
+            OutlinedTextField(
+                modifier = Modifier.padding(top = 32.dp),
+                value = userFirstName,
+                maxLines = 1,
+                onValueChange = { value -> userFirstName = value },
+                label = { Text("First name") }
+            )
 
-                TextField(
-                    modifier = Modifier.padding(top = 32.dp),
-                    value = userLastName,
-                    maxLines = 1,
-                    onValueChange = { value -> userLastName = value },
-                    label = { Text("Last name") }
-                )
+            OutlinedTextField(
+                modifier = Modifier.padding(top = 32.dp),
+                value = userLastName,
+                maxLines = 1,
+                onValueChange = { value -> userLastName = value },
+                label = { Text("Last name") }
+            )
 
-                TextField(
-                    modifier = Modifier.padding(top = 32.dp),
-                    value = userEmail,
-                    maxLines = 1,
-                    onValueChange = { value -> userEmail = value },
-                    label = { Text("Email") }
-                )
-            }
+            OutlinedTextField(
+                modifier = Modifier.padding(top = 32.dp),
+                value = userEmail,
+                maxLines = 1,
+                onValueChange = { value -> userEmail = value },
+                label = { Text("Email") }
+            )
+        }
 
-            Button(onClick = {
+        Button(
+            onClick = {
                 if (userFirstName.isBlank() || userLastName.isBlank() || userEmail.isBlank()) {
-                    Toast.makeText(context, "Registration unsuccessful. Please enter all data.",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context, "Registration unsuccessful. Please enter all data.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     PreferencesManager.setUserData(context, userFirstName, userLastName, userEmail)
                     navController.navigate(Home.route) {
                         popUpTo(OnBoarding.route) { inclusive = true }
                     }
 
-                    Toast.makeText(context, "Registration successful!",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context, "Registration successful!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.yellow),
-                    contentColor = Color.Black
-                ),
-                border = BorderStroke(0.5.dp, Color.Black),
-                shape = RoundedCornerShape(5.dp)
-            ) {
-                Text("Register")
-            }
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(R.color.yellow),
+                contentColor = Color.Black
+            ),
+            border = BorderStroke(0.5.dp, Color.Black),
+            shape = RoundedCornerShape(5.dp)
+        ) {
+            Text("Register")
         }
-
     }
 }
 

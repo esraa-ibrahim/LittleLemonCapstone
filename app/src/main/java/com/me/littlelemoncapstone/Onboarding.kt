@@ -102,7 +102,9 @@ fun Onboarding(navController: NavHostController) {
                         Toast.LENGTH_SHORT).show()
                 } else {
                     PreferencesManager.setUserData(context, userFirstName, userLastName, userEmail)
-                    navController.navigate(Home.route)
+                    navController.navigate(Home.route) {
+                        popUpTo(OnBoarding.route) { inclusive = true }
+                    }
 
                     Toast.makeText(context, "Registration successful!",
                         Toast.LENGTH_SHORT).show()

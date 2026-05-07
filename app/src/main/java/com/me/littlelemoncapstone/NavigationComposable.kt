@@ -6,7 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 @Composable
-fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean) {
+fun MyNavigation(
+    navController: NavHostController,
+    isLoggedIn: Boolean,
+    databaseMenuItems: List<MenuItemRoom>
+) {
     // If user data is stored in shared preferences,
     // then the start destination is Onboarding,
     // otherwise, the start destination is Home.
@@ -19,7 +23,7 @@ fun MyNavigation(navController: NavHostController, isLoggedIn: Boolean) {
             Onboarding(navController)
         }
         composable(Home.route) {
-            Home(navController)
+            Home(navController, databaseMenuItems)
         }
         composable(Profile.route) {
             Profile(navController)

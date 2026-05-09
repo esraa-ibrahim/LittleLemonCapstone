@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 
 @Composable
 fun MyNavigation(
@@ -27,6 +28,10 @@ fun MyNavigation(
         }
         composable(Profile.route) {
             Profile(navController)
+        }
+        composable<MenuItemRoom> { backStackEntry ->
+            val menuItem: MenuItemRoom = backStackEntry.toRoute()
+            MenuItemDetails(menuItem)
         }
     }
 }

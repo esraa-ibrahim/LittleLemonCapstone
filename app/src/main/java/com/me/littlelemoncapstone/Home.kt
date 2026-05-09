@@ -1,7 +1,5 @@
 package com.me.littlelemoncapstone
 
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -103,7 +100,7 @@ fun MyHomeScreen(navController: NavHostController,
         RestaurantLocation(modifier)
         Row(Modifier.fillMaxWidth()
             .padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
-            horizontalArrangement = Arrangement.SpaceBetween, // Pushes items to the far left and right
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically ) {
             RestaurantDescription(modifier)
 
@@ -203,7 +200,7 @@ private fun RestaurantLocation(
 }
 
 @Composable
-fun MenuCategory(category: String, onCategoryClicked: () -> Unit, modifier: Modifier = Modifier) {
+fun MenuCategory(category: String, onCategoryClicked: () -> Unit) {
     Button(onClick = {
         onCategoryClicked()
     },
@@ -242,8 +239,7 @@ fun MenuItems(navController: NavHostController? = null, menuItem: MenuItemRoom) 
             containerColor = Color.White
         ),
         onClick = {
-            // TODO Implement dish details screen and navigate to it on click
-            //navController?.navigate(DishDetails.route + "/${dish.id}")
+            navController?.navigate(menuItem)
         }) {
         Row(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
             Column() {
@@ -274,7 +270,7 @@ fun MenuItems(navController: NavHostController? = null, menuItem: MenuItemRoom) 
             GlideImage(
                 model = menuItem.imagerUrl,
                 modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                contentDescription = "Greek Salad Image"
+                contentDescription = "Menu Item Image"
             )
         }
     }

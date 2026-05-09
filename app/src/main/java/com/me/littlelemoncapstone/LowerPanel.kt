@@ -36,7 +36,7 @@ fun LowerPanel(navController: NavHostController, menuItems: List<MenuItemRoom> =
     Column {
         WeeklySpecialCard()
 
-        val categories = menuItems.map { it.category }
+        val categories = menuItems.map { it.category }.distinct()
         Row(modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.SpaceEvenly) {
             categories.forEach { category ->

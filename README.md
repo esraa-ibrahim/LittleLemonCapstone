@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.esraa.littlelemoncapstone">
-    <img src="https://google.com" alt="Get it on Google Play" height="60">
-  </a>
+    Download on Google Play
+</a>
 </p>
 
